@@ -1,5 +1,10 @@
 # MM-ForecastIO
 
+## Dependencies (Add following packages to package.json)
+
+"d3":"latest"
+
+"jsdom": "latest"
 
 ## config
 
