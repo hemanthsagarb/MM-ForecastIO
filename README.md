@@ -6,6 +6,12 @@
 
 "jsdom": "latest"
 
+## Installation
+
+- Clone this repo
+- Rename the folder from "MM-ForecastIO" to forecastio
+- put the folder in MagicMirror modules directory
+
 ## config
 
 {
