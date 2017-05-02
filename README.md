@@ -13,7 +13,7 @@
 - put the folder in MagicMirror modules directory
 
 ## config
-
+````javascript
 {
 
   module: "forecastio",
@@ -31,6 +31,7 @@
   }
   
 }
+````
 
 
 ![ScreenShot](https://raw.github.com/hemanthsagarb/MM-ForecastIO/master/look.png)
