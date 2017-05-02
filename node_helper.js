@@ -21,7 +21,7 @@ module.exports = NodeHelper.create({
     getWeatherInformation: function (api_url, callback) {
         var currentTime = Math.floor((new Date()).getTime() / 1000);
         api_url = api_url + "," + currentTime;
-        console.log(api_url);
+        //console.log(api_url);
         var self = this;
         request(
             {
@@ -88,18 +88,18 @@ module.exports = NodeHelper.create({
                 sunriseTime = sunriseHr + ":" + sunriseMt + "am";
                 sunsetTime = sunsetHr + ":" + sunsetMt + "pm";
 
-                console.log(summary);
-                console.log(hourlyTemperature);
-                console.log(hourlySummaries);
-                console.log(maxTemp + " " + maxTempHr);
-                console.log(minTemp + " " + minTempHr);
-                console.log(sunriseTime);
-                console.log(sunsetTime);
+                // console.log(summary);
+                // console.log(hourlyTemperature);
+                // console.log(hourlySummaries);
+                // console.log(maxTemp + " " + maxTempHr);
+                // console.log(minTemp + " " + minTempHr);
+                // console.log(sunriseTime);
+                // console.log(sunsetTime);
                 var info = {
                     "Temp:": temp + "°",
                     "Wind:": wind + " mph",
                     "Humidity:": humidity + "%",
-                    "Ozone:": ozone,
+                    "Ozone:": ozone+"DU",
                     "Precip:": precipitation + "%",
                     "Pressure:": pressure + " mb",
                     "DewPt:": dewPt + "°",
@@ -150,7 +150,7 @@ module.exports = NodeHelper.create({
                 var info_html = "<div id='information'>";
                 for (var k in info) {
                     if (info.hasOwnProperty(k)) {
-                        console.log(k + "\t" + info[k]);
+                        //console.log(k + "\t" + info[k]);
                         info_html += "<div class='info'>" + k + " " + info[k] + "</div>";
                     }
                 }
@@ -221,28 +221,59 @@ module.exports = NodeHelper.create({
             .attr("transform", "translate(0," + height + ")")
             .call(xAxis);
 
+        var stack = [];
         hourlySummaries.forEach(function (d) {
             if (d.hour < 23) {
 
                 var x1 = xScale(d.hour);
                 var x2 = xScale(d.hour + 1);
-                var rect = svg.append("rect").attr("x", x1).attr("y", 15).attr("width", x2 - x1).attr("height", 40);
-                if(d.summary === "Mostly Cloudy" || d.summary==="Overcast") {
-                    rect.attr("fill", "#b6bfcb");
-                }else if(d.summary ==="Partly Cloudy"){
-                    rect.attr("fill", "#d5dae2");
-                }else if(d.summary === "Clear"){
-                    rect.attr("fill", "#EEEEF5");
-                }else if(d.summary === "Light Rain" || d.summary==="Drizzle"){
-                    rect.attr("fill", "#80a5d6");
-                }else if(d.summary === "Rain"){
-                    rect.attr("fill", "#4a80c7");
-                }else if(d.summary === "Heavy Rain"){
-                    rect.attr("fill", "#3267ad")
+                var summary = d.summary;
+                if (d.summary === "Mostly Cloudy") {
+                    summary = "Overcast";
+                } else if (d.summary === "Drizzle") {
+                    summary = "Light Rain";
+                }
+                var prev = null;
+                if (stack.length > 0) {
+                    prev = stack[stack.length - 1];
+                }
+                if (prev !== null && prev.summary === summary) {
+                    prev.end = x2;
+                } else {
+                    stack.push({"start": x1, "end": x2, "summary": summary});
                 }
             }
         });
 
+        stack.forEach(function (d) {
+            var rect = svg.append("rect").attr("x", d.start).attr("y", 15).attr("width", d.end - d.start).attr("height", 40);
+            if (d.summary === "Mostly Cloudy" || d.summary === "Overcast") {
+                rect.attr("fill", "#b6bfcb");
+            } else if (d.summary === "Partly Cloudy") {
+                rect.attr("fill", "#d5dae2");
+            } else if (d.summary === "Clear") {
+                rect.attr("fill", "#EEEEF5");
+            } else if (d.summary === "Light Rain" || d.summary === "Drizzle") {
+                rect.attr("fill", "#80a5d6");
+            } else if (d.summary === "Rain") {
+                rect.attr("fill", "#4a80c7");
+            } else if (d.summary === "Heavy Rain") {
+                rect.attr("fill", "#3267ad")
+            }
+            if ((d.end - d.start) > d.summary.length * 8) {
+                var left = (d.end - d.start) - (d.summary.length * 8);
+                text = svg.append('text').text(d.summary)
+                    .attr('x', d.start + left / 2)
+                    .attr('y', 40)
+                    .attr('font-size', '16px')
+                    .attr('fill', 'black')
+                    .attr('font-weight', '300')
+                    .attr('text-align', 'center');
+            }
+            //console.log((d.end - d.start) + ", " + d.summary + "," + d.summary.length);
+        });
+
+        //console.log(stack);
         return window.d3.select('body').html();
 
     },
@@ -344,4 +375,3 @@ module.exports = NodeHelper.create({
 
 
 });
-

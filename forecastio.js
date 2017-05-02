@@ -29,4 +29,3 @@ Module.register("forecastio", {
         return ["forecastio.css", "weather-icons.css"];
     }
 });
-
