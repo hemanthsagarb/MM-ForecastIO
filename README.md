@@ -3,11 +3,11 @@
 
 ![ScreenShot](https://raw.github.com/hemanthsagarb/MM-ForecastIO/master/screenshots/look.png)
 
-![ScreenShot](https://raw.github.com/hemanthsagarb/MM-ForecastIO/master/screenshots/IMG_4880.jpg)
+<!--![ScreenShot](https://raw.github.com/hemanthsagarb/MM-ForecastIO/master/screenshots/IMG_4880.JPG)-->
 
-![ScreenShot](https://raw.github.com/hemanthsagarb/MM-ForecastIO/master/screenshots/IMG_4881.jpg)
+![ScreenShot](https://raw.github.com/hemanthsagarb/MM-ForecastIO/master/screenshots/IMG_4881.JPG)
 
-![ScreenShot](https://raw.github.com/hemanthsagarb/MM-ForecastIO/master/screenshots/IMG_4882.jpg)
+![ScreenShot](https://raw.github.com/hemanthsagarb/MM-ForecastIO/master/screenshots/IMG_4882.JPG)
 
 
 ## Dependencies (Add following packages to package.json)
