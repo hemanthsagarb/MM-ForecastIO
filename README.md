@@ -4,12 +4,18 @@
 
 ## Dependencies (Add following packages to package.json)
 
+Upgrade to the latest npm and get the latest magicmirror
+
+Add the following dependencies to package.json in the MagicMirror directory (https://github.com/MichMich/MagicMirror)
+
 "d3":"latest"
 
 "jsdom": "latest"
 
-## Installation
-- Upgrade to the latest npm and get the latest magicmirror
+run `npm install`
+
+## Module Installation
+
 - Clone this repo
 - Rename the folder from "MM-ForecastIO" to forecastio
 - put the folder in MagicMirror modules directory
